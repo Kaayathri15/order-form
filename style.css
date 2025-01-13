@@ -47,6 +47,7 @@
       font-size: 14px;
     }
     .form-container {
-      padding: 20px;
+      height: auto;
+      padding: 10px;
     }
   }
