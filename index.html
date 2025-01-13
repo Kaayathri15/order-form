@@ -83,20 +83,49 @@
             .btn {
                 font-size: 14px;
             }
-        }
 
-        @media (max-width: 576px) {
-            .table-container {
-                overflow-x: auto;
+            .qty-input {
+                width: 40px;
+                /* Further reduced width */
+                padding: 2px 5px;
+                text-align: center;
+                border: 1px solid #ced4da;
+                /* Consistent border color */
             }
 
-            h2 {
-                font-size: 22px;
+            .input-group-sm>.btn {
+                padding: 0.25rem 0.5rem;
+                /* Smaller padding */
+                font-size: 0.7rem;
+                /* Smaller font size */
+                line-height: 1.5;
+                /* Adjust line height if needed */
             }
 
-            label {
-                font-size: 14px;
+            .input-group-sm>.btn:not(:first-child):not(:last-child) {
+                border-radius: 0;
             }
+
+            .input-group-sm>.btn:first-child {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            .input-group-sm>.btn:last-child {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+
+            .table td,
+            .table th {
+                padding: 0.5rem;
+                /* Reduced table cell padding */
+            }
+
+            .input-group-sm {
+                width: 80px;
+            }
+
         }
     </style>
 </head>
@@ -139,11 +168,11 @@
             <table id="product-table" class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Description</th>
-                        <th>Unit Price (RM)</th>
-                        <th>Qty</th>
-                        <th>Total (RM)</th>
-                        <th>Action</th>
+                        <th style="width: 60px;">Description</th>
+                        <th style="width: 10px;">Unit Price (RM)</th>
+                        <th style="width: 10px;">Qty</th>
+                        <th style="width: 10px;">Total (RM)</th>
+                        <th style="width: 10px;">Action</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -254,14 +283,13 @@
                 row.innerHTML = `
                     <td>${product.description}</td>
                     <td>${product.price.toFixed(2)}</td>
-    <td>
+               <td>
     <div class="input-group input-group-sm">
         <button class="btn btn-outline-secondary decrement-btn" data-index="${index}">-</button>
-        <input type="text" value="${product.qty}" data-index="${index}" class="form-control-sm qty-input text-center" />
+        <input type="number" value="${product.qty}" data-index="${index}" class="form-control form-control-sm qty-input" />
         <button class="btn btn-outline-secondary increment-btn" data-index="${index}">+</button>
     </div>
 </td>
-
                     <td>${(product.price * product.qty).toFixed(2)}</td>
                     <td>
                         <button data-index="${index}" class="btn btn-sm btn-danger delete-btn">&times;</button>
@@ -276,21 +304,13 @@
             document.querySelectorAll('.qty-input').forEach(input => {
                 input.addEventListener('input', (e) => {
                     const index = e.target.dataset.index;
-                    let newQty = e.target.value.replace(/\D/g, ''); // Remove any non-numeric characters
-                    if (newQty === '' || parseInt(newQty) <= 0) {
-                        newQty = 1; // Default to 1 if empty or invalid
-                    }
-                    selectedProducts[index].qty = parseInt(newQty, 10);
-                    updateTable();
-                });
-
-                input.addEventListener('blur', (e) => {
-                    if (e.target.value === '' || parseInt(e.target.value) <= 0) {
-                        e.target.value = 1; // Ensure input is valid on blur
-                        const index = e.target.dataset.index;
+                    const newQty = e.target.value;
+                    if (newQty === '' || newQty <= 0) {
                         selectedProducts[index].qty = 1;
-                        updateTable();
+                    } else {
+                        selectedProducts[index].qty = parseInt(newQty, 10);
                     }
+                    updateTable();
                 });
             });
 
