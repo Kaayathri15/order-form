@@ -23,15 +23,16 @@
             <div class="mb-6">
                 <label for="customer" class="block text-sm font-medium mb-2">Customer Name</label>
                 <select id="customer" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
-                    <option value="">Select customer...</option>
+                    <option value="" disabled>Select customer...</option>
                 </select>
 
                 <label for="customer-address-input" class="block text-sm font-medium mt-4 mb-2">Customer Address</label>
-                <textarea id="customer-address-input" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" rows="1" placeholder=" Address" readonly></textarea>
+                <textarea id="customer-address-input" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" rows="2" placeholder="Address" readonly></textarea>
             </div>
 
             <!-- Product Selection -->
             <div class="mb-6">
+                <label for="product" class="block text-sm font-medium mb-2">Select Product</label>
                 <div class="flex items-center space-x-4">
                     <select id="product" class="flex-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
                         <option value="">Select product...</option>
@@ -42,7 +43,7 @@
 
             <!-- Product Table -->
             <div class="overflow-x-auto mb-6">
-                <table id="product-table" class="table-auto w-full border border-gray-300">
+                <table id="product-table" class="table-auto w-full border border-gray-300 shadow-md">
                     <thead class="bg-gray-100">
                         <tr>
                             <th class="px-4 py-2">Description</th>
@@ -180,7 +181,7 @@
                     <td class="px-4 py-2 text-center">${product.price.toFixed(2)}</td>
                     <td class="px-4 py-2 text-center">
                         <div class="flex items-center justify-center">
-                            <button class="decrement-btn px-2 py-1 bg-gray-300 rounded-l" data-index="${index}">-</button>
+                            <button class="decrement-btn px-2 py-1 bg-gray-300 rounded-l ${product.qty === 1 ? 'opacity-50 cursor-not-allowed' : ''}" data-index="${index}" ${product.qty === 1 ? 'disabled' : ''}>-</button>
                             <input type="text" value="${product.qty}" data-index="${index}" class="qty-input w-12 text-center border border-gray-300" />
                             <button class="increment-btn px-2 py-1 bg-gray-300 rounded-r" data-index="${index}">+</button>
                         </div>
@@ -201,7 +202,7 @@
                     const index = e.target.dataset.index;
                     const newQty = e.target.value;
                     if (newQty === '' || newQty <= 0) {
-                        selectedProducts[index].qty = 1;
+                        // selectedProducts[index].qty = 1;
                     } else {
                         selectedProducts[index].qty = parseInt(newQty, 10);
                     }
