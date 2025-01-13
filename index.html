@@ -284,12 +284,12 @@
                     <td>${product.description}</td>
                     <td>${product.price.toFixed(2)}</td>
                <td>
-    <div class="input-group input-group-sm">
-        <button class="btn btn-outline-secondary decrement-btn" data-index="${index}">-</button>
-        <input type="number" value="${product.qty}" data-index="${index}" class="form-control form-control-sm qty-input" />
-        <button class="btn btn-outline-secondary increment-btn" data-index="${index}">+</button>
-    </div>
-</td>
+                <div class="input-group input-group-sm">
+                    <button class="btn btn-outline-secondary decrement-btn" data-index="${index}">-</button>
+                    <input type="text" value="${product.qty}" data-index="${index}" class="form-control form-control-sm qty-input" />
+                    <button class="btn btn-outline-secondary increment-btn" data-index="${index}">+</button>
+                </div>
+                </td>
                     <td>${(product.price * product.qty).toFixed(2)}</td>
                     <td>
                         <button data-index="${index}" class="btn btn-sm btn-danger delete-btn">&times;</button>
