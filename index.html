@@ -5,208 +5,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Ordering System</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
         }
-
-        .form-container {
-            max-width: 900px;
-            padding: 30px;
-            border-radius: 12px;
-            background-color: #fff;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            margin: 20px auto;
-        }
-
-        h2 {
-            font-weight: 600;
-            color: #333;
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        label {
-            font-weight: 600;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-
-        .btn-success {
-            background-color: #28a745;
-            border-color: #28a745;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-success:hover {
-            background-color: #218838;
-            border-color: #218838;
-        }
-
-        .table-container {
-            max-height: 350px;
-            overflow-y: auto;
-        }
-
-        .table th,
-        .table td {
-            vertical-align: middle;
-            text-align: center;
-        }
-
-        .table thead {
-            background-color: #f1f1f1;
-        }
-
-        .qty-input {
-            width: 10px;
-            text-align: center;
-        }
-
-        @media (max-width: 768px) {
-            .form-container {
-        border-radius: 0;
-        padding: 15px;
-        box-shadow: none;
-        background-color: #fff ;
-        height: auto;
-    }
-
-            .btn {
-                font-size: 14px;
-            }
-
-            .qty-input {
-                width: 40px;
-                /* Further reduced width */
-                padding: 2px 5px;
-                text-align: center;
-                border: 1px solid #ced4da;
-                /* Consistent border color */
-            }
-
-            .input-group-sm>.btn {
-                padding: 0.25rem 0.5rem;
-                /* Smaller padding */
-                font-size: 0.7rem;
-                /* Smaller font size */
-                line-height: 1.5;
-                /* Adjust line height if needed */
-            }
-
-            .input-group-sm>.btn:not(:first-child):not(:last-child) {
-                border-radius: 0;
-            }
-
-            .input-group-sm>.btn:first-child {
-                border-top-right-radius: 0;
-                border-bottom-right-radius: 0;
-            }
-
-            .input-group-sm>.btn:last-child {
-                border-top-left-radius: 0;
-                border-bottom-left-radius: 0;
-            }
-
-            .table td,
-            .table th {
-                padding: 0.5rem;
-                /* Reduced table cell padding */
-            }
-
-            .input-group-sm {
-                width: 80px;
-            }
-
-        }
     </style>
 </head>
 
-<body>
-    <div class="container form-container">
-        <h2>Food Order Form</h2>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-5">
+        <div class="bg-white p-8 rounded-lg shadow-md max-w-4xl mx-auto">
+            <h2 class="text-2xl font-semibold text-center mb-6">Food Order Form</h2>
 
-        <!-- Customer Form -->
-        <div class="mb-4">
-            <div class="mb-3">
-                <label for="customer" class="form-label">Customer Name</label>
-                <select id="customer" class="form-select">
-                    <option value="">Select customer....</option>
+            <!-- Customer Form -->
+            <div class="mb-6">
+                <label for="customer" class="block text-sm font-medium mb-2">Customer Name</label>
+                <select id="customer" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="">Select customer...</option>
                 </select>
+
+                <label for="customer-address-input" class="block text-sm font-medium mt-4 mb-2">Customer Address</label>
+                <textarea id="customer-address-input" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500" rows="1" placeholder="Address" readonly></textarea>
             </div>
-            <div class="mb-3">
-                <label for="customer-address-input" class="form-label">Customer Address</label>
-                <textarea id="customer-address-input" class="form-control" rows="2" placeholder="Address"
-                    readonly></textarea>
-            </div> 
-        </div>
 
-        <!-- Product Selection -->
-        <div class="mb-3">
-            <h5 class="mb-3">Product Selection</h5>
-            <div class="input-group">
-                <select id="product" class="form-select">
-                    <option value="">Select product...</option>
-                </select>
-                <button id="add-product" class="btn btn-primary ms-2">
-                    <span>&#43;</span> Add
-                </button>
+            <!-- Product Selection -->
+            <div class="mb-6">
+                <h5 class="text-lg font-medium mb-4">Product Selection</h5>
+                <div class="flex items-center space-x-4">
+                    <select id="product" class="flex-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500">
+                        <option value="">Select product...</option>
+                    </select>
+                    <button id="add-product" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">+ Add</button>
+                </div>
             </div>
-        </div>
 
-        <!-- Product Table -->
-        <div class="table-container mb-3">
-            <table id="product-table" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th style="width: 60px;">Description</th>
-                        <th style="width: 10px;">Unit Price (RM)</th>
-                        <th style="width: 10px;">Qty</th>
-                        <th style="width: 10px;">Total (RM)</th>
-                        <th style="width: 10px;">Action</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
+            <!-- Product Table -->
+            <div class="overflow-x-auto mb-6">
+                <table id="product-table" class="table-auto w-full border border-gray-300">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-2">Description</th>
+                            <th class="px-4 py-2">Unit Price (RM)</th>
+                            <th class="px-4 py-2">Qty</th>
+                            <th class="px-4 py-2">Total (RM)</th>
+                            <th class="px-4 py-2">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
 
-        <!-- Grand Total -->
-        <div class="text-end fw-bold fs-5">
-            Grand Total: <span id="grand-total">0.00</span> RM
-        </div>
+            <!-- Grand Total -->
+            <div class="text-right font-semibold text-lg">
+                Grand Total: <span id="grand-total">0.00</span> RM
+            </div>
 
-        <!-- Confirm Order Button -->
-        <button id="confirm-order" class="btn btn-success w-100 mt-4">Confirm Order</button>
+            <!-- Confirm Order Button -->
+            <button id="confirm-order" class="w-full mt-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Confirm Order</button>
+        </div>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="order-modal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="orderModalLabel">Order Summary</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div id="order-modal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+            <div class="flex justify-between items-center mb-4">
+                <h5 class="text-xl font-medium">Order Summary</h5>
+                <div class="flex space-x-2">
+                    <button id="print-modal" class="text-blue-600 font-bold text-lg px-3 py-1 border border-blue-600 rounded-md hover:bg-blue-600 hover:text-white">Print</button>
+                    <button id="close-modal" class="text-red-600 font-bold text-lg px-3 py-1 border border-red-600 rounded-md hover:bg-red-600 hover:text-white">&times; Close</button>
                 </div>
-                <div class="modal-body" id="modal-content"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+            <div id="modal-content" class="space-y-4">
+                <!-- Order Details -->
+                <div class="p-4 bg-gray-100 rounded-md">
+                    <p class="text-sm"><strong>Customer:</strong> <span id="modal-customer-name"></span></p>
+                    <p class="text-sm"><strong>Address:</strong> <span id="modal-customer-address"></span></p>
+                </div>
+                <table class="table-auto w-full border border-gray-300">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-2">Description</th>
+                            <th class="px-4 py-2">Unit Price (RM)</th>
+                            <th class="px-4 py-2">Qty</th>
+                            <th class="px-4 py-2">Total (RM)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modal-product-list"></tbody>
+                </table>
+                <div class="text-right font-semibold">
+                    <p class="text-lg">Grand Total: RM <span id="modal-grand-total">0.00</span></p>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Sample customer and product data
         const customers = [
@@ -283,18 +177,18 @@
             selectedProducts.forEach((product, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${product.description}</td>
-                    <td>${product.price.toFixed(2)}</td>
-               <td>
-                <div class="input-group input-group-sm">
-                    <button class="btn btn-outline-secondary decrement-btn" data-index="${index}">-</button>
-                    <input type="text" value="${product.qty}" data-index="${index}" class="form-control form-control-sm qty-input" />
-                    <button class="btn btn-outline-secondary increment-btn" data-index="${index}">+</button>
-                </div>
-                </td>
-                    <td>${(product.price * product.qty).toFixed(2)}</td>
-                    <td>
-                        <button data-index="${index}" class="btn btn-sm btn-danger delete-btn">&times;</button>
+                    <td class="px-4 py-2 text-center">${product.description}</td>
+                    <td class="px-4 py-2 text-center">${product.price.toFixed(2)}</td>
+                    <td class="px-4 py-2 text-center">
+                        <div class="flex items-center justify-center">
+                            <button class="decrement-btn px-2 py-1 bg-gray-300 rounded-l" data-index="${index}">-</button>
+                            <input type="text" value="${product.qty}" data-index="${index}" class="qty-input w-12 text-center border border-gray-300" />
+                            <button class="increment-btn px-2 py-1 bg-gray-300 rounded-r" data-index="${index}">+</button>
+                        </div>
+                    </td>
+                    <td class="px-4 py-2 text-center">${(product.price * product.qty).toFixed(2)}</td>
+                    <td class="px-4 py-2 text-center">
+                        <button data-index="${index}" class="delete-btn px-2 py-1 bg-red-600 text-white rounded">&times;</button>
                     </td>
                 `;
                 tableBody.appendChild(row);
@@ -352,48 +246,32 @@
             }
 
             const customer = customers[customerDropdown.value];
-            let orderSummary = `
-        <div class="mb-2">
-            <p><strong>Customer:</strong> ${customer.name}</p>
-            <p><strong>Address:</strong> ${customer.address}</p>
-            <hr>
-        </div>
-        <table class="table table-bordered">
-            <thead class="table-light">
-                <tr>
-                    <th>Description</th>
-                    <th>Unit Price (RM)</th>
-                    <th>Qty</th>
-                    <th>Total (RM)</th>
-                </tr>
-            </thead>
-            <tbody>
-        `;
+            document.getElementById('modal-customer-name').textContent = customer.name;
+            document.getElementById('modal-customer-address').textContent = customer.address;
 
+            let orderSummary = '';
             let grandTotal = 0;
             selectedProducts.forEach(product => {
                 const total = product.price * product.qty;
                 grandTotal += total;
                 orderSummary += `
-            <tr>
-                <td>${product.description}</td>
-                <td>${product.price.toFixed(2)}</td>
-                <td>${product.qty}</td>
-                <td>${total.toFixed(2)}</td>
-            </tr>
-        `;
+                    <tr>
+                        <td class="px-4 py-2">${product.description}</td>
+                        <td class="px-4 py-2">${product.price.toFixed(2)}</td>
+                        <td class="px-4 py-2">${product.qty}</td>
+                        <td class="px-4 py-2">${total.toFixed(2)}</td>
+                    </tr>
+                `;
             });
 
-            orderSummary += `
-            </tbody>
-        </table>
-        <div class="text-end mt-3 fw-bold">
-            Grand Total: RM ${grandTotal.toFixed(2)}
-        </div>
-        `;
+            document.getElementById('modal-product-list').innerHTML = orderSummary;
+            document.getElementById('modal-grand-total').textContent = grandTotal.toFixed(2);
 
-            document.getElementById('modal-content').innerHTML = orderSummary;
-            new bootstrap.Modal(document.getElementById('order-modal')).show();
+            document.getElementById('order-modal').classList.remove('hidden');
+        });
+
+        document.getElementById('close-modal').addEventListener('click', () => {
+            document.getElementById('order-modal').classList.add('hidden');
         });
     </script>
 </body>
