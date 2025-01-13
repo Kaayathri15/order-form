@@ -78,7 +78,7 @@
         }
 
         .btn {
-            width: 35%;
+            width: 40%;
             height: 40px;
             background-color: #2563eb;
             color: white;
@@ -181,7 +181,16 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
+        .print-btn {
+            background-color: #3a38c0;
+            border: 1px solid #3a38c0;
+            color: white;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
         .close-btn:hover {
             background-color: #c82333;
         }
@@ -269,7 +278,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">Order Summary</h5>
                 <div style="display: flex; gap: 8px;">
-                    <button id="print-modal" class="btn">Print</button>
+                    <button id="print-modal" class="print-btn">Print</button>
                     <button id="close-modal" class="close-btn">&times; Close</button>
                 </div>
             </div>
