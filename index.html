@@ -198,17 +198,34 @@
             document.getElementById('grand-total').textContent = grandTotal.toFixed(2);
 
             document.querySelectorAll('.qty-input').forEach(input => {
+                let typingTimeout;
+
                 input.addEventListener('input', (e) => {
+                    clearTimeout(typingTimeout);
                     const index = e.target.dataset.index;
                     const newQty = e.target.value;
-                    if (newQty === '' || newQty <= 0) {
-                        // selectedProducts[index].qty = 1;
-                    } else {
-                        selectedProducts[index].qty = parseInt(newQty, 10);
+
+                    // Allow empty input temporarily
+                    if (newQty === '' || isNaN(newQty)) {
+                        return; // Do nothing until a valid number is entered
                     }
-                    updateTable();
+
+                    // Debounce update call to wait for user to finish typing
+                    typingTimeout = setTimeout(() => {
+                        const parsedQty = parseInt(newQty, 10);
+                        if (parsedQty === 0) {
+                            alert('Quantity cannot be zero. Please enter a valid quantity.');
+                            input.value = selectedProducts[index].qty; // Reset to the previous value
+                            return;
+                        }
+                        if (parsedQty > 0) {
+                            selectedProducts[index].qty = parsedQty;
+                            updateTable();
+                        }
+                    }, 300);
                 });
             });
+
 
             document.querySelectorAll('.increment-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
